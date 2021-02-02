@@ -102,12 +102,12 @@ void levelOrderInsertion(tree* binaryTree, node* n, queue* L){
 // Function to print node keys of Binary Tree in Level Order Transversal
 void print(node* n){
 	if(n != NULL){
-		printf("(%d",n->key);
+		printf("( %d ",n->key);
 		print(n->left);
 		print(n->right);
-		printf(")");
+		printf(") ");
 	}else{
-		printf("()");
+		printf("( ) ");
 	}
 }
 
