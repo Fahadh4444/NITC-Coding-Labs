@@ -84,10 +84,12 @@ void levelOrderInsertion(tree* binaryTree, node* n, queue* L){
 				break;
 			}else if(dequeuedNode->left == NULL){
 				dequeuedNode->left = n;
+				n->parent = dequeuedNode;
 				enqueueFront(L,dequeuedNode);
 				break;
 			}else if(dequeuedNode->right == NULL){
 				dequeuedNode->right = n;
+				n->parent = dequeuedNode;
 				enqueueBack(L,dequeuedNode->left);
 				enqueueBack(L,dequeuedNode->right);
 				break;
