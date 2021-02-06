@@ -87,9 +87,11 @@ int concat(int a, int b){
 
 //Function to implement(construct) tree
 void treeConstruction(tree* binaryTree, char s[1000000]){
-	node* temp;
+	node* temp = NULL;
+	int minus = 1;
 	int i = 0;
 	while(s[i] != '\0'){
+		minus = 1;
 		if(s[i] == '('){
 			i = i+2;
 			if(s[i] == ')'){
@@ -100,20 +102,23 @@ void treeConstruction(tree* binaryTree, char s[1000000]){
 				}
 				continue;
 			}else{
-				int num;
-				if(s[i+1] != ' '){
-					char x = s[i];
-					char y = s[i+1];
-					int num1,num2;
-					num1 = x-'0';
-					num2 = y-'0';
-					num = concat(num1,num2);
+				if(s[i] == '-'){
+					minus = -1;
 					i++;
-				}else{
-					char x =s[i];
-					num = x-'0';	
 				}
-				node* newNode = createNode(num);
+				char y = s[i];
+				int num1 = y - '0';
+				while(1){
+					if(s[i+1] != ' '){
+						i++;
+						char x = s[i];
+						int num2 = x - '0';
+						num1 = concat(num1,num2);
+					}else{
+						break;
+					}	
+				}
+				node* newNode = createNode((minus*num1));
 				if(temp == NULL){
 					binaryTree->root = newNode;
 					temp = binaryTree->root;
