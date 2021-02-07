@@ -116,43 +116,41 @@ int concat(int a, int b){
 
 //Function to implement(construct) tree
 void treeConstruction(tree* binaryTree, char s[1000000]){
-	node* temp = NULL;
-	int minus = 1;
+	int high = 1;
+	node* temp;
 	int i = 0;
 	while(s[i] != '\0'){
-		minus = 1;
 		if(s[i] == '('){
 			i = i+2;
 			if(s[i] == ')'){
 				if(s[i+1] == '\0'){
 					i++;
-				}else{
+				}
+				else{
 					i = i+2;
+					high = 0;
 				}
 				continue;
 			}else{
-				if(s[i] == '-'){
-					minus = -1;
+				int num;
+				if(s[i+1] != ' '){
+					char x = s[i];
+					char y = s[i+1];
+					int num1,num2;
+					num1 = x-'0';
+					num2 = y-'0';
+					num = concat(num1,num2);
 					i++;
+				}else{
+					char x =s[i];
+					num = x-'0';	
 				}
-				char y = s[i];
-				int num1 = y - '0';
-				while(1){
-					if(s[i+1] != ' '){
-						i++;
-						char x = s[i];
-						int num2 = x - '0';
-						num1 = concat(num1,num2);
-					}else{
-						break;
-					}	
-				}
-				node* newNode = createNode((minus*num1));
+				node* newNode = createNode(num);
 				if(temp == NULL){
 					binaryTree->root = newNode;
 					temp = binaryTree->root;
 				}
-				else if(temp->left == NULL){
+				else if(temp->left == NULL && high == 1){
 					temp->left = newNode;
 					newNode->parent = temp;
 					temp = newNode;
@@ -160,6 +158,7 @@ void treeConstruction(tree* binaryTree, char s[1000000]){
 					temp->right = newNode;
 					newNode->parent = temp;
 					temp = newNode;
+					high = 1;
 				}
 				i = i+2;
 				continue;	
@@ -175,6 +174,9 @@ void treeConstruction(tree* binaryTree, char s[1000000]){
 			}
 			continue;
 		}
+		if( s[i] == ' ' && s[i+1] == ' '){
+			break;
+		}	
 	}
 }
 
@@ -329,7 +331,45 @@ int checkCondition(node* n,int num){
 			temp->after = NULL;
 			continue;
 		}
-		if(((subTreeNodesQueue->head->key) > (subTreeNodesQueue->head->left->key)) && ((subTreeNodesQueue->head->key) < (subTreeNodesQueue->head->right->key))){
+		if(subTreeNodesQueue->head->left == NULL && subTreeNodesQueue->head->right != NULL){
+			if ((subTreeNodesQueue->head->key) < (subTreeNodesQueue->head->right->key)){
+				sum = sum + subTreeNodesQueue->head->key;
+				node* temp = subTreeNodesQueue->head;
+				subTreeNodesQueue->head = subTreeNodesQueue->head->after;
+				temp->after = NULL;
+				continue;
+			}else{
+			while(1){
+				node* temp = subTreeNodesQueue->head;
+				if(subTreeNodesQueue->head != NULL){
+					subTreeNodesQueue->head = subTreeNodesQueue->head->after;
+					temp->after = NULL;
+				}else{
+					break;
+				}
+			}
+			return 0;
+			}
+		}else if(subTreeNodesQueue->head->left != NULL && subTreeNodesQueue->head->right == NULL){
+			if ((subTreeNodesQueue->head->key) > (subTreeNodesQueue->head->left->key)){
+				sum = sum + subTreeNodesQueue->head->key;
+				node* temp = subTreeNodesQueue->head;
+				subTreeNodesQueue->head = subTreeNodesQueue->head->after;
+				temp->after = NULL;
+				continue;
+			}else{
+			while(1){
+				node* temp = subTreeNodesQueue->head;
+				if(subTreeNodesQueue->head != NULL){
+					subTreeNodesQueue->head = subTreeNodesQueue->head->after;
+					temp->after = NULL;
+				}else{
+					break;
+				}
+			}
+			return 0;
+			}	
+		}else if(((subTreeNodesQueue->head->key) > (subTreeNodesQueue->head->left->key)) && ((subTreeNodesQueue->head->key) < (subTreeNodesQueue->head->right->key))){
 			sum = sum + subTreeNodesQueue->head->key;
 			node* temp = subTreeNodesQueue->head;
 			subTreeNodesQueue->head = subTreeNodesQueue->head->after;
@@ -347,6 +387,7 @@ int checkCondition(node* n,int num){
 			}
 			return 0;
 		}
+		
 	}
 	if(num != sum){
 		return 0;
@@ -378,6 +419,18 @@ void countBST(tree* binaryTree,int num){
 	printf("%d",count);
 }
 
+// Function to print node keys of Binary Tree in Level Order Transversal
+//void print(node* n){
+//	if(n != NULL){
+//		printf("( %d ",n->key);
+//		print(n->left);
+//		print(n->right);
+//		printf(") ");
+//	}else{
+//		printf("( ) ");
+//	}
+//}
+
 
 // i p e
 //Main function
@@ -389,6 +442,7 @@ void main(){
 	gets(s);
 	treeConstruction(binaryTree,s);
 	int k;
+//	print(binaryTree->root);
 	scanf("%d",&k);
 	countBST(binaryTree,k);
 }
