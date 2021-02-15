@@ -1,0 +1,11 @@
+Input Line 01  : 18 36 9 6 12 10 1 8
+      Line 02  : 1 10
+Output : 12
+
+Input Line 01  : 18 36 9 6 12 10 8
+      Line 02  : 12 8
+Output : 12
+
+Input Line 01  : 18 36 9 6 12 10 8
+      Line 02  : 18 8
+Output : 18
