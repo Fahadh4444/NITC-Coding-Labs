@@ -1,0 +1,40 @@
+Example 01:
+INPUT:
+10
+So I said yes to Thomas Clinton and later thought that I had said yes to God and later still realized I had said yes only to Thomas Clinton
+
+OUTPUT:
+0:null
+1:I
+2:null
+3:null
+4:So-to-realized
+5:later-still
+6:said-Thomas-that-only
+7:null
+8:null
+9:yes-Clinton-and-thought-had-God
+
+
+Example 02:
+INPUT:
+3
+Write a program to create a hash table
+
+OUTPUT:
+0:create
+1:Write-a-program-to-hash-table
+2:null
+
+
+Example 03:
+INPUT:
+5
+This program is a program to create a hash table
+
+OUTPUT:
+0:table
+1:This-a-create-hash
+2:null
+3:null
+4:program-is-to
