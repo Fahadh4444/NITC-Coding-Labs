@@ -4,7 +4,7 @@
 
 
 typedef struct node{
-	char word[500];
+	char* word;
 	struct node* next;
 }node;
 
@@ -14,21 +14,23 @@ typedef struct queue{
 }queue;
 
 
-node* createNode(){
+node* createNode(int len){
 	node* newNode;
 	newNode = (node*)malloc(sizeof(node));
+	char* word = (char*)malloc(sizeof(char)*len);
 	newNode->next = NULL;
+	newNode->word = word;
 	return newNode;
 }
 
 
-queue* createHashTable(queue* A,int m){
+queue* createHashTable(queue* hashTable,int m){
 	for(int i=0; i<m; i++){
 		queue* newQueue = (queue*)malloc(sizeof(queue));
 		newQueue->head = NULL;
-		A[i] = *newQueue;
+		*(hashTable+i) = *newQueue;
 	}
-	return A;
+	return hashTable;
 }
 
 
@@ -36,10 +38,11 @@ void hashTableImplementation(char s[500], queue* A,int size){
 	int i = 0;
 	int j = 0;
 	char* token = strtok(s, " ");
-	node* newNode = createNode();
+	int len = strlen(token);
+	node* newNode = createNode(len);
 	strcpy(newNode->word,token);
 	while(token != NULL){
-		int len = strlen(token);
+		len = strlen(token);
 		char check[500];
 		strcpy(check,token);
 		int index = (len*len)%size;
@@ -52,7 +55,7 @@ void hashTableImplementation(char s[500], queue* A,int size){
 			if(token == NULL){
 				break;
 			}
-			newNode = createNode();
+			newNode = createNode(len);
 			strcpy(newNode->word,token);
 			continue;
 		}else{
@@ -75,7 +78,8 @@ void hashTableImplementation(char s[500], queue* A,int size){
 		if(token == NULL){
 			break;
 		}
-		newNode = createNode();
+		int len = strlen(token);
+		newNode = createNode(len);
 		strcpy(newNode->word,token);
 	}
 	
@@ -108,8 +112,7 @@ void main(){
 	char s[500];
 	getchar();
 	gets(s);
-	queue List[size];
-	queue* hashTable;
-	hashTable = createHashTable(List,size);
+	queue* hashTable = (queue*)malloc(sizeof(queue));
+	hashTable = createHashTable(hashTable,size);
 	hashTableImplementation(s,hashTable,size);
 }
