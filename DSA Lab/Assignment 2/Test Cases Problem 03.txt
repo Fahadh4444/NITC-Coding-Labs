@@ -1,0 +1,128 @@
+Example 01:
+INPUT:
+8
+ahe
+bah
+eah
+hea
+hac
+ahe
+cah
+bah
+
+OUTPUT:
+bah bah
+cah hac
+ahe ahe eah hea
+
+
+Example 02:
+INPUT:
+6
+eah
+hea
+hac
+ahe
+cah
+bah
+
+OUTPUT:
+bah
+cah hac
+ahe eah hea
+
+
+Example 03:
+INPUT:
+6
+heaaa
+hacca
+hbaba
+ahb
+cah
+eah
+
+OUTPUT:
+ahb hbaba
+cah hacca
+eah heaaa
+
+
+Example 04:
+INPUT:
+6
+hea
+hac
+ahe
+cah
+bah
+eah
+
+OUTPUT:
+bah
+cah hac
+ahe eah hea
+
+
+Example 05:
+INPUT:
+6
+eah
+hac
+ahe
+cah
+bah
+hea
+
+OUTPUT:
+bah
+cah hac
+ahe eah hea
+
+
+Exampe 06:
+INPUT:
+14
+heaaa
+hacca
+hbaba
+ahb
+hea
+cah
+eah
+eah
+heaaa
+ahe
+cah
+hac
+bah
+hea
+
+OUTPUT:
+ahb bah hbaba
+cah cah hac hacca
+ahe eah eah hea hea heaaa heaaa
+
+
+Example 07:
+INPUT:
+14
+ahb
+hea
+cah
+eah
+eah
+heaaa
+ahe
+cah
+hac
+bah
+hea
+heaaa
+hacca
+hbaba
+
+OUTPUT:
+ahb bah hbaba
+cah cah hac hacca
+ahe eah eah hea hea heaaa heaaa
