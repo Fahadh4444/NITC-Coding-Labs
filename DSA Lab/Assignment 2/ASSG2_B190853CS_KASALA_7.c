@@ -61,9 +61,9 @@ void enqueueBack(queue *L, node* n){
 
 
 //18 20 24 30 36 50 51
-node* treeImplementation(node* rootNode,int n,int m,int array[m]){
+node* treeImplementation(node* rootNode,int n,int m,int array[n]){
 	if(n<m){
-		int mid = (n+m)/2;
+		int mid = (n+m-1)/2;
 		rootNode = createNode(array[mid]);
 		rootNode->left = treeImplementation(rootNode->left,n,mid,array);
 		rootNode->right = treeImplementation(rootNode->right,mid+1,m,array);
@@ -194,9 +194,9 @@ void main(){
 	for(int i = 0; i<size; i++){
 		scanf("%d",&arr[i]);
 	}
-	bst->root = treeImplementation(bst->root,0,size-1,arr);
+	bst->root = treeImplementation(bst->root,0,size,arr);
 	node* n = createNode(arr[size-1]);
-	Insert(bst,n);
+//	Insert(bst,n);
 	print(bst->root);
 	printf("\n");
 	levelSum(bst);
