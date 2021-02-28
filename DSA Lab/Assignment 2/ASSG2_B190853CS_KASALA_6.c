@@ -39,38 +39,53 @@ node* createNode(int key){
 }
 
 
-qNode* createqNode(int key){
-	qNode* newNode;
-	newNode = (qNode*)malloc(sizeof(qNode));
-	newNode->data = key;
-	newNode->next = NULL;
+node* commonPoint(node* n, int a, int b){
+	node* temp = n;
+		if(temp->key<a && temp->key<b){
+			temp = commonPoint(temp->right,a,b);
+		}
+		else if(temp->key>a && temp->key>b){
+			temp = commonPoint(temp->left,a,b);
+		}
+		else{
+			return temp;	
+		}
+}
+
+int pathMax(node* n,int a,int b){
+	
+	int max = INT_MIN;
+	while(n->key != a){
+		if(n->key > a){
+			if(n->key > max && n->key != b){
+				max = n->key;
+			}
+			n = n->left;
+		}else{
+			if(n->key > max && n->key != b){
+				max = n->key;
+			}
+			n = n->right;
+		}
+	}
+	return max;
 }
 
 
-void enqueue(queue* q,qNode* n ){
-	qNode* temp;
-	if(q->next == NULL){
-		q->next = n;
+void totalPathMax(node* n, int a, int b){
+	node* common = commonPoint(n,a,b);
+//	printf("%d\n",common->key);
+	int aMax = pathMax(common,a,b);
+	int bMax = pathMax(common,b,a);
+//	printf("%d\n",aMax);
+//	printf("%d\n",bMax);
+	if(aMax>=bMax){
+		printf("%d",aMax);
 	}else{
-		temp = q->next;
-		while(1){
-			if(temp->next == NULL){
-				temp->next = n;
-				return;
-			}else{
-				temp = temp->next;
-			}
-		}
+		printf("%d",bMax);
 	}
 }
 
-
-int dequeue(queue* Q){
-	qNode* headNode= Q->next;
-	Q->next = Q->next->next;
-	headNode->next = NULL;
-	return headNode->data;
-}
 
 
 //Function to insert Nodes to BST
@@ -112,85 +127,6 @@ void print(node* n){
 	}else{
 		printf("( ) ");
 	}
-}
-
-
-//Function to find path queue
-void pathQueue(tree* bst,int a,queue* Q){
-	node* temp = bst->root;
-	while(1){
-		if(temp->key == a){
-			qNode* newNode = createqNode(temp->key);
-			enqueue(Q,newNode);
-			return;
-		}else if(temp->key != a){
-			qNode* newNode = createqNode(temp->key);
-			enqueue(Q,newNode);
-		}
-		if(temp->key > a){
-			temp = temp->left;
-		}else if(temp->key < a){
-			temp = temp->right;
-		}
-	}
-}
-
-
-//Function to find max value in two paths
-void pathMax(tree* bst,int a,int b){
-	queue* Q1 = (queue*)malloc(sizeof(queue));
-	Q1->next = NULL;
-	queue* Q2 = (queue*)malloc(sizeof(queue));
-	Q2->next = NULL;
-	pathQueue(bst,a,Q1);
-	pathQueue(bst,b,Q2);
-	int max;
-	int x,y;
-	while(1){
-		if(Q1->next != NULL && Q2->next != NULL){
-			x = dequeue(Q1);
-			y = dequeue(Q2);	
-		}
-		else{
-			break;
-		}
-		if(x != y){
-			if(x > max){
-				max = x;
-			}
-			if(y > max){
-				max = y;
-			}
-			break;
-		}else{
-			max = x;
-		}
-	}
-	while(1){
-		if(Q1->next != NULL && Q2->next != NULL){
-			x = dequeue(Q1);
-			y = dequeue(Q2);
-			if(x > max){
-				max = x;
-			}
-			if(y > max){
-				max = y;
-			}
-		}else if(Q1->next != NULL && Q2->next == NULL){
-			x = dequeue(Q1);
-			if(x > max){
-				max = x;
-			}
-		}else if(Q1->next == NULL && Q2->next != NULL){
-			y = dequeue(Q2);
-			if(y > max){
-				max = y;
-			}
-		}else{
-			printf("%d",max);
-			exit(0);
-		}
-	}	
 }
 
 
@@ -253,5 +189,6 @@ void main(){
 	int a,b;
 	scanf("%d",&a);
 	scanf("%d",&b);
-	pathMax(bst,a,b);
+	totalPathMax(bst->root,a,b);
+
 }
