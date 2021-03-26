@@ -49,12 +49,7 @@ node* rbInsert(node* T,node* x, node* N){
 			T->left = rbInsert(T->left,x,N);
 			if(T->left->color == 'R'){
 				if(T->left->left->color == 'R' || T->left->right->color == 'R'){
-					if(T->right->color == 'R'){
-						T->left->color = 'B';
-						T->right->color = 'B';
-						T->color = 'R';
-						return T;
-					}else{
+					if(T->right->color != 'R'){
 						if(T->left->left->color == 'R'){
 							T = rightRotation(T);
 							T->right->color = 'R';
@@ -67,6 +62,11 @@ node* rbInsert(node* T,node* x, node* N){
 							T->color = 'B';
 							return T;
 						}
+					}else if(T->right->color == 'R'){
+						T->left->color = 'B';
+						T->right->color = 'B';
+						T->color = 'R';
+						return T;
 					}
 				}
 			}
@@ -75,12 +75,7 @@ node* rbInsert(node* T,node* x, node* N){
 			T->right = rbInsert(T->right,x,N);
 			if(T->right->color == 'R'){
 				if(T->right->left->color == 'R' || T->right->right->color == 'R'){
-					if(T->left->color == 'R'){
-						T->left->color = 'B';
-						T->right->color = 'B';
-						T->color = 'R';
-						return T;
-					}else{
+					if(T->left->color != 'R'){
 						if(T->right->right->color == 'R'){
 							T = leftRotation(T);
 							T->left->color = 'R';
@@ -93,6 +88,11 @@ node* rbInsert(node* T,node* x, node* N){
 							T->color = 'B';
 							return T;
 						}
+					}else if(T->left->color == 'R'){
+						T->left->color = 'B';
+						T->right->color = 'B';
+						T->color = 'R';
+						return T;
 					}
 				}
 			}
