@@ -127,7 +127,7 @@ int main(){
 	T->root = N;
 	int x;
 	node* newNode;
-	while(scanf("%d",&x) == 1){
+	while(scanf("%d",&x) != 0){
 		newNode = createNode(x,N);
 		T->root = rbInsert(T->root,newNode,N);
 		if(T->root->color == 'R'){
@@ -136,5 +136,6 @@ int main(){
 		print(T->root,N);
 		printf("\n");
 	}
+	exit(0);
 	return 0;
 }
