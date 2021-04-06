@@ -98,6 +98,7 @@ node* avlInsert(node* T,int k){
 		bf = avlBalanceFactor(T,T->key);
 	}
 	
+	
 	//LL
 	if(bf > 1 && k < T->left->key){
 		return rightRotation(T);
@@ -110,19 +111,21 @@ node* avlInsert(node* T,int k){
 		T->right = rightRotation(T->right);
 		return leftRotation(T);
 	}
+
 	
 	return T;
 }
 
 
 node* minValue(node* n){
+	if(n->left == NULL){
+		return n;
+	}
 	node* temp = n;
-	while(1){
-		if(temp->left == NULL){
-			return temp;
-		}
+	while(temp->left != NULL){
 		temp = temp->left;
 	}
+	return temp;
 }
 
 
@@ -136,14 +139,11 @@ node* avlDelete(node* T,int k){
 		T->right = avlDelete(T->right,k);
 	}else{
 		if(T->left == NULL){
-			printf("%d\n",T->key);
 			return T->right;
 		}else if(T->right == NULL){
-			printf("%d\n",T->key);
 			return T->left;
 		}else{
 			node* minVal = minValue(T->right);
-			printf("%d\n",T->key);
 			T->key = minVal->key;
 			T->right = avlDelete(T->right,minVal->key);
 		}
@@ -157,20 +157,23 @@ node* avlDelete(node* T,int k){
 	}else{
 		bf = avlBalanceFactor(T,T->key);
 	}
-	
-	//LL
-	if(bf > 1 && k < T->left->key){
-		return rightRotation(T);
-	}else if(bf > 1 && k > T->left->key){
-		T->left = leftRotation(T->left);
-		return rightRotation(T);
-	}else if(bf < -1 && k > T->right->key){
-		return leftRotation(T);
-	}else if(bf < -1 && k < T->right->key){
-		T->right = rightRotation(T->right);
-		return leftRotation(T);
-	}
-	
+
+
+	if(bf > 1){
+		if(avlBalanceFactor(T->left,T->left->key) >= 0){
+			return rightRotation(T);
+		}else{
+			T->left = leftRotation(T->left);
+			return rightRotation(T);
+		}
+	}else if(bf < -1){
+		if(avlBalanceFactor(T->right,T->right->key) <= 0){
+			return leftRotation(T);
+		}else{
+			T->right = rightRotation(T->right);
+			return leftRotation(T);
+		}
+	}	
 	return T;
 
 	
@@ -207,7 +210,12 @@ int main(){
 				break;
 			case 'd':
 				scanf("%d",&x);
-				avl->root =  avlDelete(avl->root,x);
+				if(avlSearch(avl->root,x) == NULL){
+					printf("FALSE\n");
+				}else{
+					avl->root =  avlDelete(avl->root,x);
+					printf("%d\n",x);	
+				};
 				break;
 			case 's':
 				scanf("%d",&x);
@@ -220,8 +228,12 @@ int main(){
 				break;
 			case 'b':
 				scanf("%d",&x);
-				y = avlBalanceFactor(avl->root,x);
-				printf("%d\n",y);
+				if(avlSearch(avl->root,x) == NULL){
+					printf("FALSE\n");
+				}else{
+					y = avlBalanceFactor(avl->root,x);
+					printf("%d\n",y);	
+				};
 				break;
 			case 'p':
 				print(avl->root);
