@@ -268,6 +268,7 @@ int main(){
 	int x;
 	int y;
 	int r;
+	int z;
 	node* requiredNode;
 	node* resultNode;
 	while(1){
@@ -291,11 +292,12 @@ int main(){
 			case 'r':// decrease key
 				scanf("%d",&x);
 				scanf("%d",&y);
-				r = decreaseKey(heap,x,y);
+				z = x - y;
+				r = decreaseKey(heap,x,z);
 				if(r == 0){
 					printf("-1\n");
 				}else{
-					printf("%d\n",y);	
+					printf("%d\n",z);
 				}
 				break;
 			case 'd':// delete
